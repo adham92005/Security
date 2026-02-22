@@ -36,18 +36,14 @@ public class Caeser_Cipher {
         }
         return c.toString();
     }
-
-
-
-
+    
+    
     public  String decrypt(String c,int key)
     {
         return encrypt(c,26-(key%26));
     }
-
-
-
-
+    
+    
     public void Attack (String c)
     {
         loadDictionary("words_alpha.txt");
