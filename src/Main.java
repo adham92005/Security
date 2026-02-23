@@ -11,12 +11,18 @@ public class Main {
 //       obj.Attack(c);
 
          
-        String Key ="dqperstafwxgobvhnclizumlyj";
-        String plaintext ="Adhoom";
-        Monoalphabetic_Cipher obj = new Monoalphabetic_Cipher();
-        String c = obj.encrypt(plaintext,Key);
-        String main = obj.decrypt(c,Key);
-        System.out.printf("the plaintext is %s incrypted to %s then decrypted to the main text \'%s\'",plaintext,c,main);
+//        String Key ="dqperstafwxgobvhnclizumlyj";
+//        String plaintext ="Adhoom";
+//        Monoalphabetic_Cipher obj = new Monoalphabetic_Cipher();
+//        String c = obj.encrypt(plaintext,Key);
+//        String main = obj.decrypt(c,Key);
+//        System.out.printf("the plaintext is %s incrypted to %s then decrypted to the main text \'%s\'",plaintext,c,main);
 
+          String key ="playfairexample";
+          String plaintext ="aadhhojjma";
+          Playfair_Cipher obj =new Playfair_Cipher();
+          String c = obj.encrypt(plaintext,key);
+          System.out.printf("the result of encrypt %s is \'%s\'",plaintext,c);
+        
     }
 }
