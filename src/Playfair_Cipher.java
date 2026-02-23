@@ -26,7 +26,7 @@ public class Playfair_Cipher {
         }
     }
     
-    private String encrypt_2_chars(char a,char b)
+    private String encrypt_2_chars(char a,char b ,Boolean B)
     {
         int[] index_of_a =new int[2];
         int[] index_of_b =new int[2];
@@ -58,17 +58,30 @@ public class Playfair_Cipher {
             }
         }
         char out_a,out_b;
-        if(index_of_a[0]==index_of_b[0])
-        {
-         out_a=matrix[index_of_a[0]][(index_of_a[1]+1)%5];
-         out_b=matrix[index_of_b[0]][(index_of_b[1]+1)%5];
-        } else if (index_of_a[1]==index_of_b[1]) {
-            out_a=matrix[(index_of_a[0]+1)%5][index_of_a[1]];
-            out_b=matrix[(index_of_b[0]+1)%5][index_of_b[1]];
+        if(B) {
+            if (index_of_a[0] == index_of_b[0]) {
+                out_a = matrix[index_of_a[0]][(index_of_a[1] + 1) % 5];
+                out_b = matrix[index_of_b[0]][(index_of_b[1] + 1) % 5];
+            } else if (index_of_a[1] == index_of_b[1]) {
+                out_a = matrix[(index_of_a[0] + 1) % 5][index_of_a[1]];
+                out_b = matrix[(index_of_b[0] + 1) % 5][index_of_b[1]];
+            } else {
+                out_a = matrix[index_of_a[0]][index_of_b[1]];
+                out_b = matrix[index_of_b[0]][index_of_a[1]];
+            }
         }
-        else{
-            out_a=matrix[index_of_a[0]][index_of_b[1]];
-            out_b=matrix[index_of_b[0]][index_of_a[1]];
+        else
+        {
+            if (index_of_a[0] == index_of_b[0]) {
+                out_a = matrix[index_of_a[0]][(index_of_a[1] + 4) % 5];
+                out_b = matrix[index_of_b[0]][(index_of_b[1] + 4) % 5];
+            } else if (index_of_a[1] == index_of_b[1]) {
+                out_a = matrix[(index_of_a[0] +4 ) % 5][index_of_a[1]];
+                out_b = matrix[(index_of_b[0] +4) % 5][index_of_b[1]];
+            } else {
+                out_a = matrix[index_of_a[0]][index_of_b[1]];
+                out_b = matrix[index_of_b[0]][index_of_a[1]];
+            }
         }
         StringBuilder s=new StringBuilder();
         s.append(out_a);
@@ -78,6 +91,11 @@ public class Playfair_Cipher {
 
     public String encrypt (String plaintext,String key)
     {
+        return encrypt(plaintext,key,true);
+    }
+    public String encrypt (String plaintext,String key,Boolean encryption)
+    {
+        plaintext=plaintext.replace(" ","");
         StringBuilder text =new StringBuilder();
         text.append(plaintext.toLowerCase());
         
@@ -88,7 +106,7 @@ public class Playfair_Cipher {
             if(i+1<text.length()) {
                 if (text.charAt(i) == text.charAt(i + 1)) {
                     text.insert(i + 1, 'x');
-                    x.add(i + 1);
+                    x.add(0,i+1);
                 }
             }
         }
@@ -96,7 +114,7 @@ public class Playfair_Cipher {
         if(text.length()%2==1)
         {
             text.append('x');
-            x.add(text.length()-1);
+            x.add(0,text.length()-1);
         }
         StringBuilder result =new StringBuilder();
         for(int i=0;i<text.length();i+=2)
@@ -110,14 +128,25 @@ public class Playfair_Cipher {
                 j.add(i+1);
             }
             
-            result.append(encrypt_2_chars(text.charAt(i), text.charAt(i+1) ));
+            result.append(encrypt_2_chars(text.charAt(i), text.charAt(i+1) ,encryption ));
         }
         return result.toString();
     }
     
     public String decrypt(String ciphertext , String key)
     {
-        return "";
+        StringBuilder result =new StringBuilder();
+        result.append(encrypt(ciphertext,key,false));
+        for (int i :j)
+        {
+            result.deleteCharAt(i);
+            result.insert(i,'j');
+        }
+        for(int i: x)
+        {
+            result.deleteCharAt(i);
+        }
+        return result.toString();
     }
     
 }
