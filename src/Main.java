@@ -25,8 +25,8 @@ public class Main {
 //          System.out.printf("the result of encrypt %s is \'%s\' , plaintext is %s",plaintext,c,p);
         Hill_Cipher obj = new Hill_Cipher();
         int ar[][] = {
-                {3, 2},
-                {5, 7}
+                {3, 1},
+                {0, 1}
         };
         System.out.println(obj.encrypt("topsecretmessage", ar));
     }
